@@ -1,7 +1,13 @@
 package com.irmanurmaulida.recyclerview
 
+import android.app.Dialog
+import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Window
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import com.irmanurmaulida.recyclerview.adapter.AdapterTeamBola
 import com.irmanurmaulida.recyclerview.databinding.ActivityMainBinding
 import com.irmanurmaulida.recyclerview.model.Pemain
@@ -22,7 +28,31 @@ class MainActivity : AppCompatActivity() {
 
         binding.list.adapter = AdapterTeamBola(this, listPemain, object : AdapterTeamBola.OnclickListener {
             override fun detailData(item: Pemain?) {
-                TODO("Not yet implemented")
+                Dialog(this@MainActivity,).apply {
+                    requestWindowFeature(Window.FEATURE_NO_TITLE)
+                    setCancelable(true)
+                    setContentView(R.layout.detail_data_pemain)
+
+                    val image = this.findViewById<ImageView>(R.id.image_pemain)
+                    val nama = this.findViewById<TextView>(R.id.txtNamaPemain)
+
+                    val Posisi = this.findViewById<TextView>(R.id.txtPosisi)
+                    val Tinggi = this.findViewById<TextView>(R.id.txtTinggi)
+                    val Tempatlahir = this.findViewById<TextView>(R.id.txtTempatLahir)
+                    val TglLahir = this.findViewById<TextView>(R.id.txtTglLahir)
+                    val  btn = this.findViewById<Button>(R.id.btnClose)
+
+                    image.setImageResource(item?.foto ?:0 )
+                    nama.text = "${item?.nama}"
+                    Posisi.text = "${item?.posisi}"
+                    Tinggi.text = "${item?.tinggi}"
+                    Tempatlahir.text = "${item?.tempatlahir}"
+                    TglLahir.text = "${item?.tgllahir}"
+
+                    btn.setOnClickListener {
+                        this.dismiss()
+                    }
+                }.show()
             }
         })
     }
